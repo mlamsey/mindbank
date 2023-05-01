@@ -1,3 +1,5 @@
 *.wav
 __pycache__/
 .DS_Store
+
+api-key.txt
