@@ -31,6 +31,8 @@ scoop install ffmpeg
 
 5. Install OpenAi: `pip install openai`
 
+6. Install keyboard: `pip install keyboard`
+
 # Usage
 
 `cd` into `src/mindbank`, run `python mindbank`, and follow the terminal prompts.
