@@ -1,6 +1,6 @@
 import openai
 import json
-import sys
+import os
 
 def setup_api_key(api_key_file=None):
     """
@@ -48,6 +48,12 @@ class Summarizer:
         return response
     
     def write_response_to_file(self, response_json, filename):
+        # check if summaries folder exists
+        if not os.path.exists("summaries"):
+            os.makedirs("summaries")
+
+        # write response to file
+        filename = "summaries/" + filename
         with open(filename, "w") as f:
             json.dump(response_json, f)
 
@@ -56,6 +62,16 @@ class Summarizer:
         print(text)
 
 if __name__ == '__main__':
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--token", type=str, default="api_key.txt", help="path to OpenAI API key")
+    args = parser.parse_args()
+    if not args.token:
+        print("summarizer::__main__: Please specify an API key using --token")
+        sys.exit()
+
     test_text = """
     Unix is a family of multitasking, multiuser computer operating systems that derive from the original AT&T Unix, whose development started in 1969[1] at the Bell Labs research center by Ken Thompson, Dennis Ritchie, and others.[4]
 
@@ -65,7 +81,8 @@ if __name__ == '__main__':
 
     Unix distinguishes itself from its predecessors as the first portable operating system: almost the entire operating system is written in the C programming language, which allows Unix to operate on numerous platforms.[6] 
     """
-    summarizer = Summarizer()
+
+    summarizer = Summarizer(api_key_file=args.token)
     summary = summarizer.summarize_text(test_text)
     summarizer.print_response(summary)
     filename = "test.json"

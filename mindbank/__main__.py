@@ -28,6 +28,8 @@ def main():
                 transcription = mindbank.transcribe_conversation(conversation_filename)
                 text = transcription["text"]
                 summary = summarizer.summarize_text(text)
+                # TODO: create dynamic filename
+                summarizer.write_response_to_file(summary, "mindbank.txt")
                 print(summary)
     except KeyboardInterrupt:
         pass

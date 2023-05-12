@@ -1,6 +1,5 @@
 import pyaudio
 import wave
-import keyboard
 import os
 import threading
 
@@ -83,6 +82,8 @@ class AudioRecorder:
         print("Press 's' to stop recording")
 
 if __name__ == "__main__":
+    import keyboard
+
     recorder = AudioRecorder()
 
     try:

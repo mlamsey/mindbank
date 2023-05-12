@@ -1,5 +1,3 @@
-import argparse
-import sys
 from datetime import datetime
 
 from transcriber import Transcriber
@@ -34,6 +32,8 @@ class MindBank:
 if __name__ == '__main__':
     print("M I N D B A N K")
     print("Don't run me like this! Run me from main.py instead!")
+    # import argparse
+    # import sys
     # # parse arguments
     # parser = argparse.ArgumentParser(description="MindBank")
     # parser.add_argument("--token", help="path to Chat GPT token")
