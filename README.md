@@ -31,4 +31,6 @@ scoop install ffmpeg
 
 # Usage
 
-`cd` into `src/mindbank`, run `python mindbank`, and follow the terminal prompts.
+First, generate an OpenAI token: https://platform.openai.com/
+
+`python mindbank --token <path_to_api_token>`
