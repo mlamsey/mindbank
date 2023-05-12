@@ -1,10 +1,17 @@
 import whisper
+import json
+import os
 
 class Transcriber:
-    def __init__(self) -> None:
+    def __init__(self, save_path="transcriptions") -> None:
         self.model = whisper.load_model("base")
+        self.save_path = save_path
 
-    def transcribe_audio_file(self, audio_path: str) -> dict:
+        # make transcription directory if it doesn't exist
+        if not os.path.exists(self.save_path):
+            os.makedirs(self.save_path)
+
+    def transcribe_audio_file(self, audio_path: str, filename=None) -> dict:
         """
         Uses the whisper model to transcribe an audio file
         Input: audio_path: str
@@ -13,7 +20,15 @@ class Transcriber:
 
         # TODO: use pydub to split up the file if it's too big
 
-        return self.model.transcribe(audio_path)
+        transcription = self.model.transcribe(audio_path)
+
+        # save transcription
+        if filename is not None:
+            filename = self.save_path + "/" + filename
+            with open(filename, "w") as f:
+                json.dump(transcription, f)
+
+        return transcription
     
 if __name__ == '__main__':
     import argparse
