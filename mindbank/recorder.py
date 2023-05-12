@@ -1,6 +1,5 @@
 import pyaudio
 import wave
-import keyboard
 import os
 import threading
 
@@ -16,10 +15,22 @@ class AudioRecorder:
         self.stream = None
         self.is_recording = False
 
+        # make recording directory if it doesn't exist
+        if not os.path.exists("recordings"):
+            os.makedirs("recordings")
+
     def set_filename(self, filename):
-        self.filename = filename
+        """
+        Sets the filename of the recording
+        Input: filename (str)
+        """
+        self.filename = "recordings/" + filename
 
     def start_recording(self):
+        """
+        Starts recording audio
+        """
+        # record
         if not self.is_recording:
             self.is_recording = True
             self.frames = []
@@ -27,23 +38,31 @@ class AudioRecorder:
                                       channels=self.channels,
                                       rate=self.rate,
                                       input=True,
-                                      frames_per_buffer=self.chunk)
+                                      frames_per_buffer=self.chunk,)
+                                    #   input_device_index=0)
 
             print("Recording started...")
             threading.Thread(target=self.record).start()
 
     def record(self):
+        """
+        Records audio
+        """
         while self.is_recording:
             data = self.stream.read(self.chunk)
             self.frames.append(data)
 
     def stop_recording(self):
+        """
+        Stops recording audio
+        """
         if self.is_recording:
             self.is_recording = False
             self.stream.stop_stream()
             self.stream.close()
 
-            wf = wave.open(self.filename, 'wb')
+            save_path = self.filename
+            wf = wave.open(save_path, 'wb')
             wf.setnchannels(self.channels)
             wf.setsampwidth(self.p.get_sample_size(self.format))
             wf.setframerate(self.rate)
@@ -57,10 +76,15 @@ class AudioRecorder:
 
     @staticmethod
     def print_menu():
+        """
+        Prints the demo menu
+        """
         print("Press 'a' to start recording")
         print("Press 's' to stop recording")
 
 if __name__ == "__main__":
+    import keyboard
+
     recorder = AudioRecorder()
 
     try:
