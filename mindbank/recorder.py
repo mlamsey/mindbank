@@ -38,7 +38,8 @@ class AudioRecorder:
                                       channels=self.channels,
                                       rate=self.rate,
                                       input=True,
-                                      frames_per_buffer=self.chunk)
+                                      frames_per_buffer=self.chunk,
+                                      input_device_index=4)
 
             print("Recording started...")
             threading.Thread(target=self.record).start()

@@ -13,6 +13,17 @@ class Transcriber:
         return self.model.transcribe(audio_path)
     
 if __name__ == '__main__':
-    f = "/Users/mlamsey/Documents/GT/HRL/mindbank/src/mindbank/conversation_20230501_145504.wav"
+    import argparse
+    import sys
+    
+    # parse arguments
+    parser = argparse.ArgumentParser(description="Transcriber")
+    parser.add_argument("--audio", help="path to audio file")
+    args = parser.parse_args()
+    
+    if not args.audio:
+        print("transcriber::__main__: Please specify an audio file using --audio")
+        sys.exit()
+
     transcriber = Transcriber()
-    print(transcriber.transcribe_audio_file(f)["text"])
+    print(transcriber.transcribe_audio_file(args.audio)["text"])
