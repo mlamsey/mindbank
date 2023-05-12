@@ -4,7 +4,7 @@ import os
 
 def setup_api_key(api_key_file=None):
     """
-    Sets up the OpenAI API key
+    Sets up the OpenAI API key in the openai module
     Input: api_key_file (str)
     """
     if api_key_file is None:
@@ -30,6 +30,11 @@ class Summarizer:
         self.gpt_model = "text-davinci-003"
 
     def generate_prompt(self, text=""):
+        """
+        Generates a prompt for the GPT model
+        Input: text (str): text to summarize
+        Output: prompt (str): prompt for the GPT model
+        """
         return """
         Transcribed human speech is below. Summarize it.
 
@@ -37,6 +42,13 @@ class Summarizer:
         """.format(text)
 
     def summarize_text(self, text):
+        """
+        Uses the OpenAI API to summarize text
+        Input: text (str): prompt for the GPT model
+        Output: response (dict): response from the OpenAI API
+        ["choices"][0]["text"] contains the summary
+        """
+
         prompt = self.generate_prompt(text)
         response = openai.Completion.create(
                 model=self.gpt_model,
@@ -48,6 +60,11 @@ class Summarizer:
         return response
     
     def write_response_to_file(self, response_json, filename):
+        """
+        Writes the response to a file
+        Inputs: response_json (dict): response from the OpenAI API
+                filename (str): name of the file to write to
+        """
         # check if summaries folder exists
         if not os.path.exists("summaries"):
             os.makedirs("summaries")
@@ -58,8 +75,15 @@ class Summarizer:
             json.dump(response_json, f)
 
     def print_response(self, response):
+        """
+        Prints the API response text
+        """
         text = response["choices"][0]["text"]
-        print(text)
+        print("""
+        The summarized response is:
+        
+        {}
+        """.format(text))
 
 if __name__ == '__main__':
     import argparse

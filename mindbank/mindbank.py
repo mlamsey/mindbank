@@ -2,12 +2,14 @@ from datetime import datetime
 
 from transcriber import Transcriber
 from recorder import AudioRecorder
+from summarizer import Summarizer
 
 class MindBank:
-    def __init__(self):
+    def __init__(self, api_key_file=None):
         print("INITIALIZING MIND BANK")
         self.transcriber = Transcriber()
         self.recorder = AudioRecorder()
+        self.summarizer = Summarizer(api_key_file=api_key_file)
         print("MIND BANK INITIALIZED")
 
     def record_conversation(self):
@@ -25,9 +27,43 @@ class MindBank:
     def transcribe_conversation(self, conversation_filename):
         """
         Transcribes a conversation and returns the transcription
+        Output: transcription (dict): ["text"] contains the transcription
         """
+        print(" ")
         print(f"Transcribing {conversation_filename}...")
-        return self.transcriber.transcribe_audio_file(conversation_filename)
+        transcription = self.transcriber.transcribe_audio_file(conversation_filename)
+        print("Transcription complete!")
+        print(" ")
+        return transcription
+    
+    def summarize_text(self, text):
+        """
+        Summarizes text and returns the summary
+        Input: text (str): text to summarize
+        Output: response (dict): response from the OpenAI API
+        ["choices"][0]["text"] contains the summary
+        """
+        print(" ")
+        print("Summarizing text...")
+        summary = self.summarizer.summarize_text(text)
+        print("Summary complete!")
+        print(" ")
+        return summary
+    
+    def print_response(self, response):
+        """
+        Prints the summary from the response
+        Input: response (dict): response from the OpenAI API
+        """
+        self.summarizer.print_response(response)
+
+    def write_response_to_file(self, response, filename):
+        """
+        Writes the summary from the response to a file
+        Input: response (dict): response from the OpenAI API
+        Input: filename (str): name of the file to write to
+        """
+        self.summarizer.write_response_to_file(response, filename)
     
 if __name__ == '__main__':
     print("M I N D B A N K")

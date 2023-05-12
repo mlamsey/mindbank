@@ -15,21 +15,21 @@ class AudioRecorder:
         self.stream = None
         self.is_recording = False
 
+        # make recording directory if it doesn't exist
+        if not os.path.exists("recordings"):
+            os.makedirs("recordings")
+
     def set_filename(self, filename):
         """
         Sets the filename of the recording
         Input: filename (str)
         """
-        self.filename = filename
+        self.filename = "recordings/" + filename
 
     def start_recording(self):
         """
         Starts recording audio
         """
-        # make recording directory if it doesn't exist
-        if not os.path.exists("recordings"):
-            os.makedirs("recordings")
-
         # record
         if not self.is_recording:
             self.is_recording = True
@@ -38,8 +38,8 @@ class AudioRecorder:
                                       channels=self.channels,
                                       rate=self.rate,
                                       input=True,
-                                      frames_per_buffer=self.chunk,
-                                      input_device_index=4)
+                                      frames_per_buffer=self.chunk,)
+                                    #   input_device_index=0)
 
             print("Recording started...")
             threading.Thread(target=self.record).start()
@@ -61,7 +61,7 @@ class AudioRecorder:
             self.stream.stop_stream()
             self.stream.close()
 
-            save_path = os.path.join("recordings", self.filename)
+            save_path = self.filename
             wf = wave.open(save_path, 'wb')
             wf.setnchannels(self.channels)
             wf.setsampwidth(self.p.get_sample_size(self.format))

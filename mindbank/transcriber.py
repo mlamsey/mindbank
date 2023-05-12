@@ -10,6 +10,9 @@ class Transcriber:
         Input: audio_path: str
         Output: dict (key "text" contains the transcription)
         """
+
+        # TODO: use pydub to split up the file if it's too big
+
         return self.model.transcribe(audio_path)
     
 if __name__ == '__main__':
