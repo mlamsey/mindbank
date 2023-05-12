@@ -29,8 +29,20 @@ choco install ffmpeg
 scoop install ffmpeg
 ```
 
+<<<<<<< HEAD
 # Usage
 
 First, generate an OpenAI token: https://platform.openai.com/
 
 `python mindbank --token <path_to_api_token>`
+=======
+4. Install pyaudio: `pip install pyaudio`
+
+5. Install OpenAi: `pip install openai`
+
+6. Install keyboard: `pip install keyboard`
+
+# Usage
+
+`cd` into `src/mindbank`, run `python mindbank`, and follow the terminal prompts.
+>>>>>>> master
