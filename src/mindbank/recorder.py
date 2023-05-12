@@ -20,6 +20,11 @@ class AudioRecorder:
         self.filename = filename
 
     def start_recording(self):
+        # make recording directory if it doesn't exist
+        if not os.path.exists("recordings"):
+            os.makedirs("recordings")
+
+        # record
         if not self.is_recording:
             self.is_recording = True
             self.frames = []
@@ -43,7 +48,8 @@ class AudioRecorder:
             self.stream.stop_stream()
             self.stream.close()
 
-            wf = wave.open(self.filename, 'wb')
+            save_path = os.path.join("recordings", self.filename)
+            wf = wave.open(save_path, 'wb')
             wf.setnchannels(self.channels)
             wf.setsampwidth(self.p.get_sample_size(self.format))
             wf.setframerate(self.rate)
