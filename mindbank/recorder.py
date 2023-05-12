@@ -17,9 +17,16 @@ class AudioRecorder:
         self.is_recording = False
 
     def set_filename(self, filename):
+        """
+        Sets the filename of the recording
+        Input: filename (str)
+        """
         self.filename = filename
 
     def start_recording(self):
+        """
+        Starts recording audio
+        """
         # make recording directory if it doesn't exist
         if not os.path.exists("recordings"):
             os.makedirs("recordings")
@@ -38,11 +45,17 @@ class AudioRecorder:
             threading.Thread(target=self.record).start()
 
     def record(self):
+        """
+        Records audio
+        """
         while self.is_recording:
             data = self.stream.read(self.chunk)
             self.frames.append(data)
 
     def stop_recording(self):
+        """
+        Stops recording audio
+        """
         if self.is_recording:
             self.is_recording = False
             self.stream.stop_stream()
@@ -63,6 +76,9 @@ class AudioRecorder:
 
     @staticmethod
     def print_menu():
+        """
+        Prints the demo menu
+        """
         print("Press 'a' to start recording")
         print("Press 's' to stop recording")
 

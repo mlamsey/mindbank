@@ -1,6 +1,7 @@
 *.wav
 __pycache__/
 .DS_Store
+mindbank.egg-info/
 
 api-key.txt
 recordings/

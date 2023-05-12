@@ -1,3 +1,5 @@
+import argparse
+import sys
 from datetime import datetime
 
 from transcriber import Transcriber
@@ -30,14 +32,28 @@ class MindBank:
         return self.transcriber.transcribe_audio_file(conversation_filename)
     
 if __name__ == '__main__':
-    mindbank = MindBank()
-    try:
-        while True:
-            if not input("Press enter to record a conversation..."):
-                mindbank.record_conversation()
-            if not input("Press enter to transcribe the recording..."):
-                conversation_filename = mindbank.recorder.filename
-                transcription = mindbank.transcribe_conversation(conversation_filename)
-                print(transcription["text"])
-    except KeyboardInterrupt:
-        pass
+    print("M I N D B A N K")
+    print("Don't run me like this! Run me from main.py instead!")
+    # # parse arguments
+    # parser = argparse.ArgumentParser(description="MindBank")
+    # parser.add_argument("--token", help="path to Chat GPT token")
+
+    # args = parser.parse_args()
+    # if not args.token:
+    #     print("mindbank::__main__: Please specify a token using --token")
+    #     sys.exit()
+
+    # # main
+    # mindbank = MindBank()
+    # summarizer = Summarizer(args.token)
+    # try:
+    #     while True:
+    #         if not input("Press enter to record a conversation..."):
+    #             mindbank.record_conversation()
+    #         if not input("Press enter to transcribe the recording..."):
+    #             conversation_filename = mindbank.recorder.filename
+    #             transcription = mindbank.transcribe_conversation(conversation_filename)
+    #             text = transcription["text"]
+    #             summary = summarizer.summarize_text(text)
+    # except KeyboardInterrupt:
+    #     pass
