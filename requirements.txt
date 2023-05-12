@@ -1,5 +1,0 @@
-pyaudio
-openai-whisper
-openai
-pydub
-keyboard
