@@ -4,7 +4,7 @@ Store and compress your train of thought. This project combines [OpenAI Whisper]
 
 # Installation
 
-1. Tested with Python 3.10 on OSX. Using a Conda environment is recommended: `conda create -n mindbank python=3.10`
+1. Tested with Python 3.10. Using a Conda environment is recommended: `conda create -n mindbank python=3.10`
 
 1. `cd` into the repo's root directory (`/mindbank/`) and install python packages: `pip install -r requirements.txt`
 
