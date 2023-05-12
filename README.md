@@ -27,13 +27,6 @@ choco install ffmpeg
 scoop install ffmpeg
 ```
 
-<<<<<<< Updated upstream
-4. Install pyaudio: `pip install pyaudio`
-
-5. Install OpenAi: `pip install openai`
-
-=======
->>>>>>> Stashed changes
 # Usage
 
 `cd` into `src/mindbank`, run `python mindbank`, and follow the terminal prompts.
