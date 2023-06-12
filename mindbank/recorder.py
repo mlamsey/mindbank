@@ -5,6 +5,12 @@ import threading
 
 class AudioRecorder:
     def __init__(self, filename="output.wav", prompt_for_input_device=True):
+        """
+        Initializes the AudioRecorder
+        Input: filename (str): name of the file to record to
+        Input: prompt_for_input_device (bool): whether to prompt the user to select an input device
+        """
+        
         self.filename = filename
         self.chunk = 1024
         self.format = pyaudio.paInt16
