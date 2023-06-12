@@ -4,7 +4,7 @@ import os
 import threading
 
 class AudioRecorder:
-    def __init__(self, filename="output.wav"):
+    def __init__(self, filename="output.wav", prompt_for_input_device=True):
         self.filename = filename
         self.chunk = 1024
         self.format = pyaudio.paInt16
@@ -14,10 +14,36 @@ class AudioRecorder:
         self.frames = []
         self.stream = None
         self.is_recording = False
+        self.input_device_index = None
 
         # make recording directory if it doesn't exist
         if not os.path.exists("recordings"):
             os.makedirs("recordings")
+
+        if prompt_for_input_device:
+            self.prompt_for_input_device()
+
+    def prompt_for_input_device(self):
+        """
+        Prompts the user to select an input device
+        """
+        while True:
+            print("Input devices:")
+            for i in range(self.p.get_device_count()):
+                print(f"{i}: {self.p.get_device_info_by_index(i)['name']}")
+            index = int(input("Select an input device, or enter Q to cancel: "))
+            if index == "Q":
+                return
+            elif index >= 0 and index < self.p.get_device_count():
+                self.set_input_device_index(index)
+                break
+
+    def set_input_device_index(self, index):
+        """
+        Sets the input device index
+        Input: index (int)
+        """
+        self.input_device_index = index
 
     def set_filename(self, filename):
         """
@@ -31,18 +57,21 @@ class AudioRecorder:
         Starts recording audio
         """
         # record
-        if not self.is_recording:
-            self.is_recording = True
-            self.frames = []
-            self.stream = self.p.open(format=self.format,
-                                      channels=self.channels,
-                                      rate=self.rate,
-                                      input=True,
-                                      frames_per_buffer=self.chunk,)
-                                    #   input_device_index=0)
+        if self.input_device_index is not None:
+            if not self.is_recording:
+                self.is_recording = True
+                self.frames = []
+                self.stream = self.p.open(format=self.format,
+                                        channels=self.channels,
+                                        rate=self.rate,
+                                        input=True,
+                                        frames_per_buffer=self.chunk,
+                                        input_device_index=self.input_device_index)
 
-            print("Recording started...")
-            threading.Thread(target=self.record).start()
+                print("Recording started...")
+                threading.Thread(target=self.record).start()
+        else:
+            print("recorder::start_recording: No input device selected. Run prompt_for_input_device() to select an input device.")
 
     def record(self):
         """
